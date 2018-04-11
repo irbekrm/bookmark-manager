@@ -13,4 +13,8 @@ class Bookmark
   def self.all
     (Mapper::all self).map{ |data| self.new data }
   end 
+
+  def self.create params
+    Mapper::create({bookmark: self.new(params), id: self})
+  end
 end
