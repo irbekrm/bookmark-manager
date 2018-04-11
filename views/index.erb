@@ -1,8 +1,9 @@
 <ul>
   <% bookmarks.each do |bookmark| %>
-    <li><a href=<%= bookmark.url %>><%= bookmark.title %></li>
+    <li><a href=<%= bookmark.url %>><%= bookmark.title %></a></li>
   <% end %>
 </ul>
 <form method='get' action='/new'>
 <input value="New" type="submit"></input>
 </form>
+<%=flash[:message]%>

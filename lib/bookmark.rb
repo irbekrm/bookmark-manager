@@ -15,6 +15,13 @@ class Bookmark
   end 
 
   def self.create params
-    Mapper::create({bookmark: self.new(params), id: self})
+      return nil unless valid_url? params['url']
+      Mapper::create({bookmark: self.new(params), id: self})
+      true
+  end
+
+  def self.valid_url? url
+    re = /https*\:\/\/[\w\.\-]{5,}\.[a-z]+/
+    !!(url.match(re))
   end
 end

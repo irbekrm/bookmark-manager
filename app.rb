@@ -1,8 +1,10 @@
 require 'sinatra/base'
 require_relative './lib/bookmark.rb'
+require 'sinatra/flash'
 
 class BookmarksManager < Sinatra::Base
   set :sessions, true
+  register Sinatra::Flash
 
   get '/' do
     erb :index, locals: { bookmarks: Bookmark.all }
@@ -13,7 +15,7 @@ class BookmarksManager < Sinatra::Base
   end
 
   post '/new' do
-    Bookmark.create params
+    flash[:message] = 'ERROR: Invalid URL' unless Bookmark.create params
     redirect '/'
   end
 
