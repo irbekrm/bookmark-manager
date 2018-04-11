@@ -9,7 +9,12 @@ module Mapper
   end
 
   def self.create params
-    connect_exec "INSERT INTO #{TABLES[params[:id].to_s]}(url, title) VALUES('#{params[:bookmark].url}', '#{params[:bookmark].title}');"
+    #params = escape params
+    connect_exec "INSERT INTO #{TABLES[params[:klass].to_s]}(id,url, title) VALUES('#{params[:bookmark].id}','#{params[:bookmark].url}', '#{params[:bookmark].title}');"
+  end
+
+  def self.delete params
+    connect_exec "DELETE FROM #{TABLES[params[:klass].to_s]} WHERE id LIKE '#{params[:id]}';"
   end
 
   def self.connect_exec statement
@@ -17,5 +22,9 @@ module Mapper
     result = conn.exec statement
     conn.close
     result
+  end
+
+  def self.escape params
+    params.keys.each { |key| params[key] = PG::Connection.escape_string(params[key]) }
   end
 end
