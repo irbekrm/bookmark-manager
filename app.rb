@@ -24,5 +24,14 @@ class BookmarksManager < Sinatra::Base
     redirect '/'
   end
 
+  get '/update' do
+    erb :update, locals: { name: params['name'] }
+  end
+
+  post '/update' do
+    Bookmark.update params
+    redirect '/'
+  end 
+
   run! if app_file == $0
 end

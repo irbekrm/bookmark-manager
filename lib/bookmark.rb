@@ -29,9 +29,13 @@ class Bookmark
   def self.delete id
     Mapper::delete({:id =>id, :klass => self})
   end
+  
+  def self.update params
+    params[:klass] = self
+    Mapper::update(params)
+  end
 
   def random_id
     x = (Array.new(2) { Kernel.rand(97..122).chr } + Array.new(4) { Kernel.rand(0..9).to_s }).join''
-    p x
   end
 end

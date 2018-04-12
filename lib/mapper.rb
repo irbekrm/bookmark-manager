@@ -17,6 +17,10 @@ module Mapper
     connect_exec "DELETE FROM #{TABLES[params[:klass].to_s]} WHERE id LIKE '#{params[:id]}';"
   end
 
+  def self.update params
+    connect_exec "UPDATE #{TABLES[params[:klass].to_s]} SET url='#{params['url']}', title='#{params['title']}' WHERE id LIKE '#{params['name']}';"
+  end
+
   def self.connect_exec statement
     conn = PG.connect(dbname: ENV['ENVIRONMENT'] == 'test' ? 'bookmark_manager_test' : 'bookmark_manager')
     result = conn.exec statement

@@ -4,6 +4,10 @@
         <form method='post' action='/delete?name=<%=bookmark.id%>'>
         <input id=<%=bookmark.id%> type='submit'value='Delete'></input>
         </form>
+        <form method='get' action='/update?name=<%=bookmark.id%>'>
+        <input type='hidden' name='name' value=<%=bookmark.id%> />
+        <input type='submit'value='Update'></input>
+        </form>
     </li>
   <% end %>
 </ul>
