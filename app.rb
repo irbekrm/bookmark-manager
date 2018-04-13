@@ -7,7 +7,7 @@ class BookmarksManager < Sinatra::Base
   register Sinatra::Flash
 
   get '/' do
-    erb :index, locals: { bookmarks: Bookmark.all }
+    erb :index, locals: { bookmarks: Bookmark.all, comments: Bookmark.comments }
   end
 
   get '/new' do
@@ -32,6 +32,15 @@ class BookmarksManager < Sinatra::Base
     Bookmark.update params
     redirect '/'
   end 
+
+  get '/add_comment' do
+    erb :comment, locals: { id: params['id'] }
+  end
+
+  post '/add_comment' do
+    Bookmark.add_comment params
+    redirect '/'
+  end
 
   run! if app_file == $0
 end

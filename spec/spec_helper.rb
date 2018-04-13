@@ -11,7 +11,7 @@ Capybara.app = BookmarksManager
 RSpec.configure do |config|
   config.before(:each) do
     conn = PG.connect(dbname: 'bookmark_manager_test')
-    conn.exec "TRUNCATE bookmarks;"
+    conn.exec "TRUNCATE bookmarks CASCADE;"
     conn.close
   end
 end

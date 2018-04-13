@@ -21,6 +21,14 @@ class Bookmark
       true
   end
 
+  def self.add_comment params
+    Mapper::add_comment params
+  end
+
+  def self.comments
+    (Mapper::comments).group_by { |comment| comment['bookmark_id'] }
+  end
+
   def self.valid_url? url
     re = /https*\:\/\/[\w\.\-]{5,}\.[a-z]+/
     !!(url.match(re))
@@ -33,6 +41,10 @@ class Bookmark
   def self.update params
     params[:klass] = self
     Mapper::update(params)
+  end
+
+  def self.find id
+    self.new(((Mapper::find({id: id, klass: self})).to_a)[0])
   end
 
   def random_id

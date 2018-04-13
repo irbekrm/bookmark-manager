@@ -1,12 +1,24 @@
 <ul>
   <% bookmarks.each do |bookmark| %>
     <li><a href=<%= bookmark.url %>><%= bookmark.title %></a>
+        <% if comments[bookmark.id] %>
+        <h4>COMMENTS:</h4>
+        <ul>
+        <% comments[bookmark.id].each do |comment| %>
+          <li><%= comment['text'] %>
+        <% end %>
+        </ul>
+        <% end %>
         <form method='post' action='/delete?name=<%=bookmark.id%>'>
         <input id=<%=bookmark.id%> type='submit'value='Delete'></input>
         </form>
         <form method='get' action='/update?name=<%=bookmark.id%>'>
         <input type='hidden' name='name' value=<%=bookmark.id%> />
         <input type='submit'value='Update'></input>
+        </form>
+        <form method='get' action='/add_comment'>
+          <input type='hidden' name='id' value=<%=bookmark.id%> />
+          <input type='submit'value='Comment'></input>
         </form>
     </li>
   <% end %>
